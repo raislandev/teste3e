@@ -13,4 +13,10 @@ class Item extends Eloquent
     protected $fillable = [
         'name', 'description','user_id'
     ];
+
+    public function user()
+    {
+        return $this->belongsTo('App\User');
+    }
+
 }

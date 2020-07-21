@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Repositories\Contracts\ItemRepositoryInterface;
 use Auth;
+use App\User;
 
 
 class ItemController extends Controller
@@ -73,17 +74,17 @@ class ItemController extends Controller
         $data = $request->all();
 
         $user_id = Auth::user()->id;
-
         $data['user_id'] = $user_id;
+
         
         Validator::make($data, [
-            'name' => 'required|string|max:255',
+            'name' => 'required|string|max:255|unique:itens,name,null,null,user_id,'.$user_id,
             'description' => 'required|string|max:255',
         ])->validate();
 
 
         if($this->model->create($data)){
-            $request->session()->flash('msg', 'Inscrição realizada com sucesso');
+            $request->session()->flash('msg', 'Registro adicionado com sucesso');
             $request->session()->flash('status', 'success');// success error notification
             return redirect()->back();
         }else{
@@ -159,8 +160,12 @@ class ItemController extends Controller
         $user_id = Auth::user()->id;
         $data['user_id'] = $user_id;
 
+        $item = $this->model->find($id);
+
+        //dd($item->id);
+
         Validator::make($data, [
-            'name' => 'required|string|max:255',
+            'name' => 'required|string|max:255|unique:itens,name,'.$item->id.',_id,user_id,'.$user_id,
             'description' => 'required|string|max:255',
         ])->validate();
 

@@ -1,7 +1,7 @@
 
     <div class="form-group">
         <label for="name">Nome</label>
-        <input type="text" name="name" id="name" class="input-text form-control{{ $errors->has('name') ? ' is-invalid' : '' }}" name="name"  value="{{ old('name') ?? ($register->name ?? '') }}" placeholder="Nome" required>
+        <input type="text" name="name" id="name" class="input-text form-control{{ $errors->has('name') ? ' is-invalid' : '' }}" name="name"  value="{{ old('name') ?? ($register->name ?? '') }}" placeholder="Nome">
         @if ($errors->has('name'))
             <span class="invalid-feedback" role="alert">
                 <strong >{{ $errors->first('name') }}</strong>

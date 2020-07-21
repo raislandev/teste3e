@@ -30,5 +30,10 @@ class User extends Eloquent implements Authenticatable
     protected $hidden = [
         'password', 'remember_token',
     ];
+
+    public function itens()
+    {
+        return $this->hasMany('App\Item');
+    }
     
 }
