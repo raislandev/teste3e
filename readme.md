@@ -63,3 +63,23 @@ If you discover a security vulnerability within Laravel, please send an e-mail t
 ## License
 
 The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+
+https://medium.com/@gnjokikiarie/laravel-authentication-with-mongodb-e3921ed10c1a
+
+https://www.itsolutionstuff.com/post/laravel-5-mongodb-crud-tutorialexample.html
+
+http://www.expertphp.in/article/laravel-5-6-mongodb-crud-tutorial-with-example-for-beginners
+
+composer install 
+
+php 7.3
+laravel 5.6
+
+criar um banco no mongodb e configurar o .env
+
+DB_CONNECTION=mongodb
+MONGO_DB_HOST=127.0.0.1
+MONGO_DB_PORT=27017
+MONGO_DB_DATABASE=banco
+MONGO_DB_USERNAME=username
+MONGO_DB_PASSWORD=passwoer
