@@ -70,7 +70,9 @@ https://www.itsolutionstuff.com/post/laravel-5-mongodb-crud-tutorialexample.html
 
 http://www.expertphp.in/article/laravel-5-6-mongodb-crud-tutorial-with-example-for-beginners
 
+sudo apt-get install php-mongodb
 composer install 
+sudo apt-get install php-mongodb
 
 php 7.3
 laravel 5.6

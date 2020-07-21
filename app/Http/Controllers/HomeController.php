@@ -23,6 +23,7 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return view('home');
+        $page = 'Painel de Controle';
+        return view('home',compact('page'));
     }
 }
