@@ -34,7 +34,7 @@
     </li>
 </ul>
 <br>
-<p>Start na aplicação: php artisan serve</p>
+<p>Iniciar a aplicação: php artisan serve</p>
 
 
 ## License
