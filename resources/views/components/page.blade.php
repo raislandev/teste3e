@@ -1,4 +1,4 @@
-<div class="container body-container">
+<div class="container body-container col-md-9">
     <div class="row justify-content-center">
         <div class="col-md-{{$col}}">
             <div class="card">

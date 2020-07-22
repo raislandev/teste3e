@@ -12,11 +12,14 @@
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return redirect('/itens');
 });
 
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
 
-Route::resource('itens','ItemController');
+Route::middleware('auth')->group(function () {
+    Route::resource('/itens','ItemController');
+    Route::resource('/users','UserController');
+});

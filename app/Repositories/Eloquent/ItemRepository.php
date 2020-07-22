@@ -18,6 +18,7 @@ class ItemRepository extends AbstractRepository implements ItemRepositoryInterfa
     public function paginate(int $paginate = 10,string $column ='id',string $order='ASC'){
         return $this->model->where('user_id',Auth::user()->id)->orderBy($column, $order)->paginate($paginate);
     }
+
     
 } 
 

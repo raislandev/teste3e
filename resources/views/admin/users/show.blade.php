@@ -12,10 +12,9 @@
 
                 @endbreadcrumb  
                 
-               <ul class="list-group mb-2">
-                  <li class="list-group-item ">Nome:  <span>{{$register->name}}</span></li>
-                  <li class="list-group-item ">Descrição:  <span>{{$register->description}}</span></li>
-               </ul>
+                <p>Nome: {{$register->name}}</p>
+                <p>Descrição: {{$register->description}}<p>
+      
 
                @if($delete)
                   @form_component(['action'=>route($routerName.".destroy",$register->id),'method'=>"DELETE"])

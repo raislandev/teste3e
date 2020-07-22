@@ -5,51 +5,40 @@ namespace App\Http\Controllers;
 use Validator;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\Repositories\Contracts\ItemRepositoryInterface;
-use Auth;
-use App\User;
+use App\Repositories\Contracts\UserRepositoryInterface;
+use Illuminate\Support\Facades\Hash;
 
 
-class ItemController extends Controller
+class UserController extends Controller
 {
-    private $router = "itens";
+    private $router = "users";
     private $paginate =6;
     private $search = ['name']; 
     private $model;
 
-    public function __construct(ItemRepositoryInterface $model){
+    public function __construct(UserRepositoryInterface $model){
        $this->model = $model;
     } 
 
     
-    public function index(Request $request)
+    public function index(Request $req)
     {
-
-        $columnList = [
-            'name'=>'Nome',
-            'description'=>'Descrição',
-            
-        ];  
+        $columnList = ['name'=>'Nome','email'=>'email'];  
 
         $search = '';
-        if(isset($request->search)){
-          $search = $request->search;
+        if(isset($req->search)){
+          $search = $req->search;
           $list = $this->model->findWhereLike($this->search, $search,'name','ASC');
         }else{
           $list = $this->model->paginate($this->paginate,'name','ASC');
         }
 
-        $page = "Lista de Itens";
+        $page = "Lista de usuários";
 
         $routerName = $this->router;
         
-        $breadcrumb = [
-          /*(object)['url'=>route('home'),'title'=>'Home'], */
-          (object)['url'=>'','title'=>'Lista de Itens'],  
-
-        ];
        
-        return view('admin.'.$routerName.'.index', compact('list','search','routerName','columnList','breadcrumb','page'));
+        return view('admin.'.$routerName.'.index', compact('list','search','routerName','columnList','page'));
         
     }
 
@@ -57,14 +46,9 @@ class ItemController extends Controller
     public function create()
     {
         $routerName = $this->router;
-        $page = "Adicionar Item";
+        $page = "Adicionar Usuário";
 
-        $breadcrumb = [
-            (object)['url'=>route($routerName.'.index'),'title'=>'Lista de Itens'],
-            (object)['url'=>'','title'=>'Adicionar'],  
-        ];
-
-        return view('admin.'.$routerName.'.create', compact('routerName','breadcrumb','page'));
+        return view('admin.'.$routerName.'.create', compact('routerName','page'));
 
     }
 
@@ -73,15 +57,11 @@ class ItemController extends Controller
     {
         $data = $request->all();
 
-        $user_id = Auth::user()->id;
-        $data['user_id'] = $user_id;
-
-        
         Validator::make($data, [
-            'name' => 'required|string|max:255|unique:itens,name,null,null,user_id,'.$user_id,
-            'description' => 'required|string|max:255',
+            'name' => 'required|string|max:255',
+            'email' => 'required|string|email|max:255|unique:users',
+            'password' => 'required|string|min:6|confirmed',
         ])->validate();
-
 
         if($this->model->create($data)){
             $request->session()->flash('msg', 'Registro adicionado com sucesso');
@@ -91,34 +71,29 @@ class ItemController extends Controller
             $request->session()->flash('msg', 'erro ao adicionar um registro');
             $request->session()->flash('status', 'error');
             return redirect()->back();
+
         }
 
 
     }
 
    
-    public function show($id, Request $request)
+    public function show($id, Request $req)
     {
-         
         $routerName = $this->router;
         $register = $this->model->find($id);
 
          if($register){
             $page2 = "Detalhes";
 
-            $breadcrumb = [
-                (object)['url'=>route($routerName.'.index'),'title'=>'Lista de Itens'],
-                (object)['url'=>'','title'=>'Detalhes'],  
-            ];
-
             $delete = false;
-            if($request->delete ?? false){
-                $request->session()->flash('msg','Que realmente deletar esse registro?');
-                $request->session()->flash('status', 'error');
+            if($req->delete ?? false){
+                $req->session()->flash('msg','Que realmente deletar esse registro?');
+                $req->session()->flash('status', 'error');
                 $delete = true;
             }
 
-            return view('admin.'.$routerName.'.show', compact('routerName','breadcrumb','page2','register','delete'));  
+            return view('admin.'.$routerName.'.show', compact('routerName','page2','register','delete'));  
          }
 
          return redirect()->route($routerName.'.index');
@@ -130,15 +105,11 @@ class ItemController extends Controller
         $routerName = $this->router;
         $register = $this->model->find($id);
 
+
          if($register){
-            $page2 = "Editar Item";
+            $page2 = "Editar Usuário";
 
-            $breadcrumb = [
-                (object)['url'=>route($routerName.'.index'),'title'=>'Lista de Itens'],
-                (object)['url'=>'','title'=>'Editar'],  
-            ];
-
-            return view('admin.'.$routerName.'.edit', compact('routerName','breadcrumb','page2','register'));  
+            return view('admin.'.$routerName.'.edit', compact('routerName','page2','register'));  
          }
 
          return redirect()->route($routerName.'.index');
@@ -151,15 +122,19 @@ class ItemController extends Controller
     {
         $data = $request->all();
 
-        $user_id = Auth::user()->id;
-        $data['user_id'] = $user_id;
-
-        $item = $this->model->find($id);
+        if(!$data['password']){
+            unset($data['password']);
+        }
 
         Validator::make($data, [
-            'name' => 'required|string|max:255|unique:itens,name,'.$item->id.',_id,user_id,'.$user_id,
-            'description' => 'required|string|max:255',
+            'name' => 'required|string|max:255',
+            'email' => 'required|string|email|max:255:unique:users,email'.$id,
+            'password' => 'sometimes|required|string|min:6|confirmed',
         ])->validate();
+        
+        if(isset($data['password'])){
+            $data['password']= Hash::make($data['password']);
+        }
 
         if($this->model->update($data,$id)){
             $request->session()->flash('msg', 'Registro atualizado com sucesso');
