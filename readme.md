@@ -25,9 +25,9 @@
     <li>Adicione a configuração do banco no arquivo .env
       <ul>
         <li>DB_CONNECTION=mongodb</li>
-        <li>MONGO_DB_HOST=127.0.0.1</li>
-        <li>MONGO_DB_PORT=27017</li>
-        <li>MONGO_DB_DATABASE=nameBanco</li>
+        <li>MONGO_DB_HOST=ipserver</li>
+        <li>MONGO_DB_PORT=porta_mongodb</li>
+        <li>MONGO_DB_DATABASE=namebanco</li>
         <li>MONGO_DB_USERNAME=username</li>
         <li>MONGO_DB_PASSWORD=password</li>
       </ul>
