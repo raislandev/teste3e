@@ -8,26 +8,34 @@
 </p>
 
 ## Instalação 
-Instalar dependencia do laravel:
- composer install 
-
-Dependencias do php-mongo:
-sudo apt-get install php-mongodb
-
-Configuração do mongodb .env:
-DB_CONNECTION=mongodb
-MONGO_DB_HOST=127.0.0.1
-MONGO_DB_PORT=27017
-MONGO_DB_DATABASE=banco
-MONGO_DB_USERNAME=username
-MONGO_DB_PASSWORD=passwoer
+<p>Instalar dependencia do laravel:</p>
+<ul>
+    <li>composer install</li> 
+</ul>
+<br>
+<p>Instalar o driver do php-mongo:</p>
+<ul>
+    <li>sudo apt-get install php-mongodb</li>
+</ul>
+<br>
+<p>Configurar o .env e banco de dados</p>
+<ul>
+    <li>criar o arquivo .env de arcodo o .env.example</li>
+    <li>php artisan key:generate</li>
+    <li>Adicione a configuração do banco no arquivo .env
+      <ul>
+        <li>DB_CONNECTION=mongodb</li>
+        <li>MONGO_DB_HOST=127.0.0.1</li>
+        <li>MONGO_DB_PORT=27017</li>
+        <li>MONGO_DB_DATABASE=nameBanco</li>
+        <li>MONGO_DB_USERNAME=username</li>
+        <li>MONGO_DB_PASSWORD=password</li>
+      </ul>
+    </li>
+</ul>
+<br>
+<p>Start na aplicação: php artisan serve</p>
 
 
 ## License
 The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
-
-https://medium.com/@gnjokikiarie/laravel-authentication-with-mongodb-e3921ed10c1a
-
-https://www.itsolutionstuff.com/post/laravel-5-mongodb-crud-tutorialexample.html
-
-http://www.expertphp.in/article/laravel-5-6-mongodb-crud-tutorial-with-example-for-beginners
