@@ -44,7 +44,6 @@ class ItemController extends Controller
         $routerName = $this->router;
         
         $breadcrumb = [
-          /*(object)['url'=>route('home'),'title'=>'Home'], */
           (object)['url'=>'','title'=>'Lista de Itens'],  
 
         ];
